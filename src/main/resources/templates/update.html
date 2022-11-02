@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit user</title>
+    <style type="text/css">
+        .container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            align-content: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .form {
+            display: flex;
+            align-items: stretch;
+            flex-direction: column;
+
+        }
+        .tab {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 50px;
+            padding: 5px;
+        }
+        .tab_button {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            height: 20px;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<section class="container">
+    <h2>Edit user</h2>
+    <form class="form" th:method="PATCH" th:action="@{/{id}(id=${user.getId()})}" th:object="${user}">
+        <div class="tab">
+            <label for="ID">ID</label>
+            <input type="text" th:field="*{id}" id="ID" disabled>
+        </div>
+        <div class="tab">
+            <label for="name">First name</label>
+            <input type="text" th:field="*{firstName}" id="name">
+            <div style="color: red" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">Имя ошибки</div>
+        </div>
+        <div class="tab">
+            <label for="lastname">Last name</label>
+            <input type="text" th:field="*{lastName}" id="lastname">
+            <div style="color: red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Имя ошибки</div>
+        </div>
+        <div class="tab">
+            <label for="age">Age</label>
+            <input type="text" th:field="*{age}" id="age" placeholder="Введите возраст">
+            <div style="color: red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Имя ошибки</div>
+        </div>
+        <div class="tab">
+            <label for="email">Email:</label>
+            <input type="text" th:field="*{email}" id="email">
+            <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Имя ошибки</div>
+        </div>
+        <div class="tab">
+            <label for="password">Password</label>
+            <input type="password" th:field="*{password}" id="password">
+            <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Имя ошибки</div>
+        </div>
+        <div class="tab_button">
+            <input type="submit" value="Edit">
+        </div>
+    </form>
+    <input type="button" value="Close" onclick="window.location.href='/'">
+</section>
+</body>
+</html>
