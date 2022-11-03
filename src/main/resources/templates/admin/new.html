@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <title>Add new user</title>
     <style type="text/css">
+        .header {
+            display: flex;
+            justify-content: center;
+        }
         .container {
             width: 100%;
             height: 100%;
@@ -39,9 +43,12 @@
     </style>
 </head>
 <body>
+<header class="header">
+    <input class="button" type="button" value="Logout" onclick="window.location.href='/logout'">
+</header>
 <section class="container">
     <h2>Add new user</h2>
-    <form class="form" th:method="POST" th:action="@{/}" th:object="${user}">
+    <form class="form" th:method="POST" th:action="@{/admin}" th:object="${user}">
         <div class="tab">
             <label for="name">First Name</label>
             <input type="text" th:field="*{firstName}" id="name" placeholder="Введите имя">
@@ -71,7 +78,7 @@
             <input type="submit" value="Add new user">
         </div>
     </form>
-    <input type="button" value="Close" onclick="window.location.href='/'">
+    <input type="button" value="Close" onclick="window.location.href='/admin'">
 </section>
 </body>
 </html>

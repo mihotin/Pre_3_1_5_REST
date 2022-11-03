@@ -17,8 +17,8 @@ public class Init {
 
 //    @PostConstruct
 //    public void init() {
-//        User user1 = new User("admin", "adminov", "admin@mail.com", (byte) 50, "admin");
-//        User user2 = new User("user", "userov", "user@mail.com", (byte) 15, "user");
+//        User user1 = new User("admin", "adminov", "admin@mail.com", (byte) 50, "admin", "ROLE_ADMIN");
+//        User user2 = new User("user", "userov", "user@mail.com", (byte) 15, "user", "ROLE_USER");
 //
 //        userService.save(user1);
 //        userService.save(user2);

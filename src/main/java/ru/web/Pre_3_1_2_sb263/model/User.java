@@ -1,11 +1,13 @@
 package ru.web.Pre_3_1_2_sb263.model;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.Collection;
+import java.util.Collections;
 
 @Entity
 @Table(name = "users")
@@ -37,6 +39,9 @@ public class User implements UserDetails{
     @Size(min = 4, message = "Пароль должен содержать от 5 до 20 символов")
     private String password;
 
+    @Column(name = "role")
+    private String role;
+
     public User() {
     }
 
@@ -46,12 +51,13 @@ public class User implements UserDetails{
         this.email = email;
     }
 
-    public User(String firstName, String lastName, String email, Byte age, String password) {
+    public User(String firstName, String lastName, String email, Byte age, String password, String role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.age = age;
         this.password = password;
+        this.role = role;
     }
 
     public Long getId() {
@@ -73,6 +79,16 @@ public class User implements UserDetails{
     public Byte getAge() {
         return age;
     }
+
+    // Гетеры сетеры роли ************
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+    //*************************
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
@@ -110,7 +126,7 @@ public class User implements UserDetails{
     // Методы интерфейса UserDetails
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return Collections.singletonList(new SimpleGrantedAuthority(getRole()));
     }
 
     public String getPassword() {
