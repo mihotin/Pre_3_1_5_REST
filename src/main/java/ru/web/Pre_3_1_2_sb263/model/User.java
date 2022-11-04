@@ -1,13 +1,12 @@
 package ru.web.Pre_3_1_2_sb263.model;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -16,7 +15,7 @@ public class User implements UserDetails{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     @NotEmpty(message = "Поле не должно быть пустым")
     @Size(min = 2, max = 30, message = "Имя должно содержать от 2 до 30 символов")
     private String firstName;
@@ -25,7 +24,7 @@ public class User implements UserDetails{
     @Size(min = 2, max = 30, message = "Имя должно содержать от 2 до 30 символов")
     private String lastName;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     @NotEmpty(message = "Поле не должно быть пустым")
     @Email(message = "Невалидный адрес почты")
     private String email;
@@ -39,8 +38,11 @@ public class User implements UserDetails{
     @Size(min = 4, message = "Пароль должен содержать от 5 до 20 символов")
     private String password;
 
-    @Column(name = "role")
-    private String role;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "users_role",
+                joinColumns = @JoinColumn(name = "user_id"),
+                inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<Role> userRoles;
 
     public User() {
     }
@@ -51,13 +53,13 @@ public class User implements UserDetails{
         this.email = email;
     }
 
-    public User(String firstName, String lastName, String email, Byte age, String password, String role) {
+    public User(String firstName, String lastName, String email, Byte age, String password, List<Role> userRoles) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.age = age;
         this.password = password;
-        this.role = role;
+        this.userRoles = userRoles;
     }
 
     public Long getId() {
@@ -81,13 +83,15 @@ public class User implements UserDetails{
     }
 
     // Гетеры сетеры роли ************
-    public String getRole() {
-        return role;
+
+    public List<Role> getRole() {
+        return userRoles;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRole(List<Role> userRoles) {
+        this.userRoles = userRoles;
     }
+
     //*************************
 
     public void setFirstName(String firstName) {
@@ -126,7 +130,7 @@ public class User implements UserDetails{
     // Методы интерфейса UserDetails
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority(getRole()));
+        return getRole();
     }
 
     public String getPassword() {

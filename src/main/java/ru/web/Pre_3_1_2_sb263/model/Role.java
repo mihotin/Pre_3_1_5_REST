@@ -3,6 +3,7 @@ package ru.web.Pre_3_1_2_sb263.model;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "roles")
@@ -13,6 +14,9 @@ public class Role implements GrantedAuthority {
 
     @Column(name = "role")
     private String role;
+
+    @ManyToMany(mappedBy = "userRoles")
+    private List<User> users;
 
     public Role() {
     }
@@ -37,17 +41,22 @@ public class Role implements GrantedAuthority {
         this.role = role;
     }
 
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
     @Override
     public String toString() {
-        return "Role{" +
-                "id=" + id +
-                ", role='" + role + '\'' +
-                '}';
+        return role.replace("ROLE_", "");
     }
 
     // Мтоеды GrantedAuthority
     @Override
     public String getAuthority() {
-        return null;
+        return role;
     }
 }

@@ -29,8 +29,11 @@
             align-items: center;
             flex-direction: column;
             justify-content: space-between;
-            height: 50px;
+            height: 60px;
             padding: 5px;
+        }
+        .select {
+            width: 100%;
         }
         .tab_button {
             display: flex;
@@ -73,13 +76,20 @@
             <input type="text" th:field="*{email}" id="email">
             <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Имя ошибки</div>
         </div>
-
         <div class="tab">
             <input type="hidden" th:field="*{password}" id="hidden_pass">
             <label for="password">Password</label>
             <input type="password" th:field="*{password}" id="password">
             <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Имя ошибки</div>
         </div>
+        <!---------------------------->
+        <div class="tab">
+            <label for="select">Role:</label>
+            <select class="select" th:field="*{role}" size="2" name="role" multiple id="select">
+                <option th:each="role : ${roles}" th:text="${role}" th:value="${role.id}"></option>
+            </select>
+        </div>
+        <!------------------------------>
         <div class="tab_button">
             <input type="submit" value="Edit">
         </div>

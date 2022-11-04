@@ -53,16 +53,12 @@ public class UserServiceImp implements UserService, UserDetailsService{
     }
 
     @Override
-    public User getByName(String username) {
-        return userRepo.findByFirstName(username);
-    }
-
-    @Override
     public List<User> getAll() {
         return userRepo.findAll();
     }
 
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepo.findByFirstName(username);
 

@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.web.Pre_3_1_2_sb263.model.User;
+import ru.web.Pre_3_1_2_sb263.service.RoleService;
 import ru.web.Pre_3_1_2_sb263.service.UserService;
 import javax.validation.Valid;
 
@@ -13,11 +14,12 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-
     private final UserService userService;
+    private final RoleService roleService;
     @Autowired
-    public AdminController(UserService userService) {
+    public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
     @GetMapping()
@@ -27,7 +29,8 @@ public class AdminController {
     }
 
     @GetMapping("/new")
-    public String newUser(@ModelAttribute("user") User user) {
+    public String newUser(@ModelAttribute("user") User user, Model model) {
+        model.addAttribute("roles", roleService.getAll());
         return "admin/new";
     }
 
@@ -42,6 +45,7 @@ public class AdminController {
     @GetMapping("/{id}/update")
     public String update(@PathVariable("id") Long id, Model model) {
         model.addAttribute("user", userService.getOne(id));
+        model.addAttribute("roles", roleService.getAll());
         return "admin/update";
     }
 
@@ -57,6 +61,7 @@ public class AdminController {
     @GetMapping("/{id}/delete")
     public String delete(@PathVariable("id") Long id, Model model) {
         model.addAttribute("user", userService.getOne(id));
+        model.addAttribute("roles", userService.getOne(id).getRole());
         return "admin/delete";
     }
 

@@ -20,12 +20,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
         this.successHandler = successHandler;
     }
 
-    //Конфигурация авторизвции
+    //Конфигурация авторизации
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/admin").hasRole("ADMIN")
+                .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/user").hasAnyRole("USER", "ADMIN")
-                //.antMatchers("/login").permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin().successHandler(successHandler);
     }

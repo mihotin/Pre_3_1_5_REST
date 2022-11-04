@@ -14,8 +14,6 @@ public interface UserService {
 
     User getOne(Long id);
 
-    User getByName(String username);
-
     List<User> getAll();
 
     PasswordEncoder getPasswordEncoder();
