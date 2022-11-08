@@ -37,9 +37,9 @@ public class Init {
         roleAll.add(role1);
         roleAll.add(role2);
 
-        User admin = new User("admin", "adminov", "admin@mail.com", (byte) 50, "admin", roleAdmin);
-        User user1 = new User("user", "userov", "user@mail.com", (byte) 15, "user", roleUser);
-        User user2 = new User("user2", "userov2", "user2@mail.com", (byte) 120, "user2", roleAll);
+        User admin = new User("admin", "adminov", "admin@mail.ru", (byte) 50, "admin", roleAdmin);
+        User user1 = new User("user", "userov", "user@mail.ru", (byte) 15, "user", roleUser);
+        User user2 = new User("user2", "userov2", "user2@mail.ru", (byte) 120, "user2", roleAll);
 
         userService.save(admin);
         userService.save(user1);

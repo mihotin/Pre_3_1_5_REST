@@ -60,10 +60,15 @@ public class UserServiceImp implements UserService, UserDetailsService{
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepo.findByFirstName(username);
-
-        if (user == null)
+        //User user = userRepo.findByFirstName(username);
+        User user;
+        if (userRepo.findByFirstName(username) != null) {
+            user = userRepo.findByFirstName(username);
+        } else if (userRepo.findByEmail(username) != null) {
+            user =  userRepo.findByEmail(username);
+        } else {
             throw new UsernameNotFoundException("User not found");
+        }
 
         return user;
     }

@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
@@ -35,7 +36,7 @@ public class User implements UserDetails{
     private Byte age;
 
     @Column(name = "password")
-    @Size(min = 4, message = "Пароль должен содержать от 5 до 20 символов")
+    @Size(min = 4, message = "Пароль должен содержать от 4 до 20 символов")
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -125,6 +126,10 @@ public class User implements UserDetails{
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 '}';
+    }
+    public String getStringRole() {
+        return userRoles.stream().map(Object::toString)
+                .collect(Collectors.joining(" "));
     }
 
     // Методы интерфейса UserDetails
