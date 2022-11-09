@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.web.Pre_3_1_2_sb263.model.User;
-import ru.web.Pre_3_1_2_sb263.repositorys.UserRepo;
 import ru.web.Pre_3_1_2_sb263.service.RoleService;
 import ru.web.Pre_3_1_2_sb263.service.UserService;
 import javax.validation.Valid;
@@ -18,20 +17,18 @@ import java.security.Principal;
 public class AdminController {
     private final UserService userService;
     private final RoleService roleService;
-    private final UserRepo userRepo;
+
     @Autowired
-    public AdminController(UserService userService, RoleService roleService, UserRepo userRepo) {
+    public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
         this.roleService = roleService;
-        this.userRepo = userRepo;
     }
 
     @GetMapping()
     public String printUsers(@ModelAttribute("user") User user, Principal principal, Model model) {
             model.addAttribute("allusers", userService.getAll());
             model.addAttribute("roles", roleService.getAll());
-
-            User userLog = userRepo.findByFirstName(principal.getName());
+            User userLog = userService.findUserByName(principal.getName());
             model.addAttribute("userLog", userLog);
         return "admin/index";
     }

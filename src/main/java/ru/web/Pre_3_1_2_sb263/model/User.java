@@ -39,7 +39,7 @@ public class User implements UserDetails{
     @Size(min = 4, message = "Пароль должен содержать от 4 до 20 символов")
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(name = "users_role",
                 joinColumns = @JoinColumn(name = "user_id"),
                 inverseJoinColumns = @JoinColumn(name = "role_id"))

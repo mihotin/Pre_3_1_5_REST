@@ -1,9 +1,7 @@
 package ru.web.Pre_3_1_2_sb263.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,7 +13,7 @@ import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
-public class UserServiceImp implements UserService, UserDetailsService{
+public class UserServiceImp implements UserService {
     private final UserRepo userRepo;
 
     @Autowired
@@ -56,20 +54,8 @@ public class UserServiceImp implements UserService, UserDetailsService{
     public List<User> getAll() {
         return userRepo.findAll();
     }
-
     @Override
-    @Transactional
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        //User user = userRepo.findByFirstName(username);
-        User user;
-        if (userRepo.findByFirstName(username) != null) {
-            user = userRepo.findByFirstName(username);
-        } else if (userRepo.findByEmail(username) != null) {
-            user =  userRepo.findByEmail(username);
-        } else {
-            throw new UsernameNotFoundException("User not found");
-        }
-
-        return user;
+    public User findUserByName(String username) {
+        return userRepo.findByFirstName(username);
     }
 }

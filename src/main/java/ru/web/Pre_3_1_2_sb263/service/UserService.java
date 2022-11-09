@@ -12,9 +12,8 @@ public interface UserService {
 
     void update(Long id, User updateUser);
 
+    User findUserByName(String username);
     User getOne(Long id);
-
     List<User> getAll();
-
     PasswordEncoder getPasswordEncoder();
 }
