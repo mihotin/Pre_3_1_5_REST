@@ -6,10 +6,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.web.Pre_3_1_2_sb263.model.User;
 
+import java.util.Optional;
+
 @Repository
 public interface UserRepo extends JpaRepository<User, Long> {
-    @Query("select u from User u join fetch u.userRoles where u.firstName = :username")
-    User findByFirstName(@Param("username") String username);
+    User findByFirstName(String username);
    @Query("select u from User u join fetch u.userRoles where u.email = :email")
-   User findByEmail(@Param("email") String email);
+   Optional<User> findByEmail(@Param("email") String email);
 }

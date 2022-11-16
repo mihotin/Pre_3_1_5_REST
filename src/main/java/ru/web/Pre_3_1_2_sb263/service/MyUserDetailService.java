@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.web.Pre_3_1_2_sb263.model.User;
 import ru.web.Pre_3_1_2_sb263.repositorys.UserRepo;
 
+import java.util.Optional;
+
 @Service
 public class MyUserDetailService implements UserDetailsService {
     private final UserRepo userRepo;
@@ -20,15 +22,15 @@ public class MyUserDetailService implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user;
-        if (userRepo.findByFirstName(username) != null) {
-            user = userRepo.findByFirstName(username);
-        } else if (userRepo.findByEmail(username) != null) {
-            user =  userRepo.findByEmail(username);
-        } else {
+        Optional<User> user = userRepo.findByEmail(username);
+        if (user.isEmpty())
             throw new UsernameNotFoundException("User not found");
-        }
-
-        return user;
+//        User user;
+//        if (userRepo.findByEmail(username) != null) {
+//            user =  userRepo.findByEmail(username);
+//        } else {
+//            throw new UsernameNotFoundException("User not found");
+//        }
+        return user.get();
     }
 }
