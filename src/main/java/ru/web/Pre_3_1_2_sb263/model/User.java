@@ -1,5 +1,9 @@
 package ru.web.Pre_3_1_2_sb263.model;
 
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -43,6 +47,8 @@ public class User implements UserDetails{
     @JoinTable(name = "users_role",
                 joinColumns = @JoinColumn(name = "user_id"),
                 inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @JsonManagedReference
+    @JsonIgnore
     private List<Role> userRoles;
 
     public User() {

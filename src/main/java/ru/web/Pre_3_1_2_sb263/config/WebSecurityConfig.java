@@ -22,14 +22,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
     //Конфигурация авторизации
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http.csrf().disable()
+                .authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/user").hasAnyRole("USER", "ADMIN")
                 .anyRequest().authenticated()
-                .and().formLogin().loginPage("/auth/login")
-                .loginProcessingUrl("/process_login")
-                .successHandler(successHandler).permitAll()
-                .failureUrl("/auth/login?error");
+                .and().formLogin().successHandler(successHandler);
     }
 
     // Настройка аутентификации
