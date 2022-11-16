@@ -77,7 +77,6 @@ public class RESTController {
 
     @GetMapping("/user/auth")
     public ResponseEntity<User> printAuthUser(Principal principal) {
-        // User userLog = userService.findUserByName(principal.getName());
         return new ResponseEntity<>(userService.findUserByName(principal.getName()), HttpStatus.OK);
     }
 

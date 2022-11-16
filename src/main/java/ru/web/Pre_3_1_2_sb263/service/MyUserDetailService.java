@@ -25,12 +25,7 @@ public class MyUserDetailService implements UserDetailsService {
         Optional<User> user = userRepo.findByEmail(username);
         if (user.isEmpty())
             throw new UsernameNotFoundException("User not found");
-//        User user;
-//        if (userRepo.findByEmail(username) != null) {
-//            user =  userRepo.findByEmail(username);
-//        } else {
-//            throw new UsernameNotFoundException("User not found");
-//        }
+
         return user.get();
     }
 }
